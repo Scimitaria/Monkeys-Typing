@@ -1,27 +1,21 @@
 package cs2.AIP;
 
-import cs2.util.Vec2;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.ArrayList;
 //run with ./gradlew run -Pmain=cs2.AIP.Playground
-@SuppressWarnings("unused")
 public class Playground extends Application {
     @Override
     public void start(Stage stage) {
         Image image = new Image("file:square.png");
-        stage.setTitle("Eugenics");
+        Image goalimg = new Image("file:goal.jpg");
+        stage.setTitle("Monkeys Typing");
         Canvas canvas = new Canvas(800, 800);
         stage.setScene(new Scene(new StackPane(canvas)));
         GraphicsContext g = canvas.getGraphicsContext2D();
@@ -46,17 +40,16 @@ public class Playground extends Application {
                     }
                     kid.display(g);
                     //success evaluation
-                    kid.pro = Long.valueOf(Math.round(kid.pos.getX())).intValue(); 
+                    kid.pro = Long.valueOf(Math.round(kid.pos.getX())).intValue();
                 }
                 frame++;
                 if(frame>=59){
-                    e.evolve();
+                    e.evolve(e.kids,image);
                     frame=0;
                 }
             }
-
         };
         timer.start();
     }
-
 }
+//TODO: fix figure out why only one AI displays, improve learning
