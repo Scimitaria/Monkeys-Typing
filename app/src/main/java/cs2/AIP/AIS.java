@@ -27,5 +27,4 @@ public abstract class AIS {
   public void move(Vec2 delta) {
     this.pos.addThis(delta);
   }
-
 }

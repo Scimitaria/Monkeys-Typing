@@ -33,6 +33,7 @@ public class Eugenics {
     return kid;
   }
 
+  //genetic algorithm
   public void evolve(ArrayList<AI> ai,Image image){
     var len = ai.size();
     var children = new ArrayList<AI>();
