@@ -1,5 +1,5 @@
 package cs2.AIP;
-
+//TODO: is this file even necessary?
 import cs2.util.Vec2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

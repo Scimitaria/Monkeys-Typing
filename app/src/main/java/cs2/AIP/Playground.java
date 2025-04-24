@@ -40,8 +40,8 @@ public class Playground extends Application {
 
             @Override
             public void handle(long now) {
+                g.fillRect(0, 0, 800, 800);
                 for (int i = 0; i < e.kids.size() - 1; i++) {
-                    g.fillRect(0, 0, 800, 800);
                     var kid=e.kids.get(i);
                     switch(kid.actions.get(frame)){
                         case 0: kid.moveLeft();  break;
@@ -58,7 +58,7 @@ public class Playground extends Application {
                 }
                 goal.display(g);
                 frame++;
-                if(frame>=59){
+                if(frame>=59){//TODO: increase action #
                     e.evolve(e.kids,image);
                     frame=0;
                 }
@@ -67,4 +67,4 @@ public class Playground extends Application {
         timer.start();
     }
 }
-//TODO: fix figure out why only one AI displays,get it to actually reach the goal,increase action #,update gitignore
+//TODO: update gitignore

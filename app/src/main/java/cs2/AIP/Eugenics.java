@@ -14,8 +14,11 @@ public class Eugenics {
   ArrayList<Integer> pros = new ArrayList<Integer>();
 
   public Eugenics(Image ick) {
-    for (int k = 0; k < 60; k++) acts.add(rand.nextInt(4));
-    for (int i = 0; i < 19; i++) kids.add(new AI(ick, new Vec2(400, 400), acts));
+    for (int i = 0; i < 19; i++) {
+      acts = new ArrayList<Integer>();
+      for (int k = 0; k < 60; k++) acts.add(rand.nextInt(4));
+      kids.add(new AI(ick, new Vec2(400, 400), acts));
+    }
   }
 
   public ArrayList<Integer> procreate(ArrayList<Integer> a1,ArrayList<Integer> a2){
