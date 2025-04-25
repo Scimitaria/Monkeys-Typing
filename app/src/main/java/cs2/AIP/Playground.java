@@ -51,7 +51,7 @@ public class Playground extends Application {
                         default: throw new IndexOutOfBoundsException("illegal movement command");
                     }
                     kid.display(g);
-                    if(kid.intersect(goal))break;//TODO: supposed to end but doesn't
+                    if(kid.intersect(goal))System.exit(0);
                     //success evaluation
                     Double diff = initDist-distToGoal(kid);
                     kid.pro = diff.intValue();
@@ -67,4 +67,3 @@ public class Playground extends Application {
         timer.start();
     }
 }
-//TODO: update gitignore
