@@ -8,10 +8,10 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Eugenics {
-  public ArrayList<AI> kids = new ArrayList<AI>();
+  public ArrayList<AI> kids = new ArrayList<AI>();    //agents
+  ArrayList<Integer> acts = new ArrayList<Integer>(); //actions
+  ArrayList<Integer> pros = new ArrayList<Integer>(); //success evaluation
   Random rand = new Random();
-  ArrayList<Integer> acts = new ArrayList<Integer>();
-  ArrayList<Integer> pros = new ArrayList<Integer>();
 
   public Eugenics(Image ick) {
     for (int i = 0; i < 19; i++) {
@@ -36,10 +36,16 @@ public class Eugenics {
     return kid;
   }
 
-  //genetic algorithm
-  public void evolve(ArrayList<AI> ai,Image image){
+  /*Genetic Algorithm
+   * Creates a population which is then evaluated
+   * based on success criteria. The best ones will
+   * be selected to produce the next generation.
+  */
+  public void evolve(ArrayList<AI> ai,Image image,int adds,boolean add){
     var len = ai.size();
     var children = new ArrayList<AI>();
+
+    //sort AI based on success evaluation
     Collections.sort(ai,new Comparator<AI>(){
       public int compare(AI a1, AI a2){
         if(a1.pro>a2.pro) return 1;
@@ -47,17 +53,33 @@ public class Eugenics {
         return 0; 
       }
     });
+    //select top performers
     var first  = ai.get(len-1);
     var second = ai.get(len-2);
+
+    //reset actions
     acts=new ArrayList<Integer>();
     for(int i=0;i<kids.size();i++){
       acts=procreate(first.actions,second.actions);
+      if(add){
+        for(int j=0;j<adds;j++){
+          acts.add(rand.nextInt(4));
+        }
+      }
       children.add(new AI(image,new Vec2(400, 400),acts));
     }
     kids=children;
   }
 
-  //Monkeys Typing variant
+  /*Monkeys Typing variant
+   * Similar concept to the Genetic Algorithm,
+   * but without the selection of top agents.
+   * Instead, random variations are introduced,
+   * the magnitude of which varies inversely
+   * with success evaluation.
+   * 
+   * This algorithm is terrible lol
+  */
   public void evolve() {
     pros = new ArrayList<Integer>();
     var len=kids.size();
