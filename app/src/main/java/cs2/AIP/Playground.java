@@ -27,7 +27,7 @@ public class Playground extends Application {
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
             int reps  = 1;
-            Eugenics e = new Eugenics(image);
+            Eugenics e = new Eugenics(image,20,20);
             AI goal = new AI(goalimg,new Vec2(100, 100),new ArrayList<Integer>());
 
             public double distToGoal(AI ai){
@@ -66,7 +66,8 @@ public class Playground extends Application {
                 var lenActs=e.kids.get(0).actions.size()-1;
                 if(frame>=lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    e.evolve(e.kids,image,10,(reps%5)==0);
+                    int addRate = 1;//# of turns between adding actions
+                    e.evolve(e.kids,image,10,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }

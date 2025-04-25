@@ -13,10 +13,10 @@ public class Eugenics {
   ArrayList<Integer> pros = new ArrayList<Integer>(); //success evaluation
   Random rand = new Random();
 
-  public Eugenics(Image ick) {
-    for (int i = 0; i < 19; i++) {
+  public Eugenics(Image ick, int population, int actionNum) {
+    for (int i = 0; i < population; i++) {
       acts = new ArrayList<Integer>();
-      for (int k = 0; k < 60; k++) acts.add(rand.nextInt(4));
+      for (int k = 0; k < actionNum; k++) acts.add(rand.nextInt(4));
       kids.add(new AI(ick, new Vec2(400, 400), acts));
     }
   }
@@ -41,7 +41,7 @@ public class Eugenics {
    * based on success criteria. The best ones will
    * be selected to produce the next generation.
   */
-  public void evolve(ArrayList<AI> ai,Image image,int adds,boolean add){
+  public void evolve(ArrayList<AI> ai,Image image,int addNum,boolean addRate){
     var len = ai.size();
     var children = new ArrayList<AI>();
 
@@ -61,16 +61,24 @@ public class Eugenics {
     acts=new ArrayList<Integer>();
     for(int i=0;i<kids.size();i++){
       acts=procreate(first.actions,second.actions);
-      if(add){
-        for(int j=0;j<adds;j++){
-          acts.add(rand.nextInt(4));
-        }
-      }
+      if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
       children.add(new AI(image,new Vec2(400, 400),acts));
     }
     kids=children;
   }
 
+  public AI type(AI ai,int level, int div){
+    var len = ai.actions.size();
+    for(int i=0;i<len;i++){
+      switch (level){
+        case 2: for(int j = 0; j < len - 1; j += rand.nextInt(div / 10)) ai.actions.set(i, rand.nextInt(4)); break;
+        case 1: for(int j = 0; j < len - 1; j += rand.nextInt(div / 2)) ai.actions.set(i, rand.nextInt(4)); break;
+      }
+    }
+    return ai;
+  }
+
+  //TODO: fix MT
   /*Monkeys Typing variant
    * Similar concept to the Genetic Algorithm,
    * but without the selection of top agents.
@@ -80,7 +88,7 @@ public class Eugenics {
    * 
    * This algorithm is terrible lol
   */
-  public void evolve() {
+  public void evolve(int addNum,boolean addRate) {
     pros = new ArrayList<Integer>();
     var len=kids.size();
     for (int j = 0; j < len; j++) pros.add(kids.get(j).pro);
@@ -90,12 +98,9 @@ public class Eugenics {
       var kid=kids.get(fg);
       if (p == kid.pro){
         kid.pos = new Vec2(400, 400);
-        if (p < len / 2) {
-          for (int i = 0; i < kid.actions.size() - 1; i += rand.nextInt(len / 10)) kid.actions.set(i, rand.nextInt(4));
-        }
-        if ((fg > 9) && (fg < len * 3 / 4)) {
-          for (int i = 0; i < kid.actions.size() - 1; i += rand.nextInt(len / 2)) kid.actions.set(i, rand.nextInt(4));
-        }
+        if(p < len / 2) type(kid,2,len);
+        if((fg > 9) && (fg < len * 3 / 4)) type(kid,2,len);
+        if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
       }
     }
   }
