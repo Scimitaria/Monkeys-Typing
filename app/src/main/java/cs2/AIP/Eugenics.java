@@ -21,12 +21,17 @@ public class Eugenics {
     }
   }
 
+  //mixes attributes of the best agents to create the next generation
+  //TODO: check w/ more than two
   public ArrayList<Integer> procreate(ArrayList<Integer> a1,ArrayList<Integer> a2){
     var len = a1.size();
     if(len!=a2.size())throw new IndexOutOfBoundsException("lists are not of equal length");
+
     var kid=new ArrayList<Integer>();
-    var e = 0;
     var coinflip=0;
+    var e = 0;
+
+    //pick random between selections
     for(int i=0;i<len;i++){
       coinflip=rand.nextInt(2);
       if(coinflip==1)e=a1.get(i);
@@ -69,6 +74,8 @@ public class Eugenics {
 
   public AI type(AI ai,int level, int div){
     var len = ai.actions.size();
+
+    //randomize based on success evaluation
     for(int i=0;i<len;i++){
       switch (level){
         case 2: for(int j = 0; j < len - 1; j += rand.nextInt(div / 10)) ai.actions.set(i, rand.nextInt(4)); break;
