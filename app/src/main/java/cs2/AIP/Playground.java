@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import cs2.util.Vec2;
 import javafx.animation.AnimationTimer;
-//run with ./gradlew run -Pmain=cs2.AIP.Playground
+
 public class Playground extends Application {
     @Override
     public void start(Stage stage) {
