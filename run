@@ -7,10 +7,10 @@
 #if a filename isn't provided,
 #default to Playground
 fName="Playground"
+
 if [[ $# -gt 0 ]];
     then
         fName=$1
     fi
 
-#how do we make this work
 ./gradlew run -Pmain=cs2.AIP.$fName

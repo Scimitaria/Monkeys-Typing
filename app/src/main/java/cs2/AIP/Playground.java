@@ -24,11 +24,17 @@ public class Playground extends Application {
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.setFill(Color.WHITE);
         stage.show();
-//TODO: add bash file to run/set parameters
+        //TODO: make these arg accessible?
+        int population  = 50;//size of starting population
+        int initActions = 20;//# of actions to start
+
+        int addRate = 1; //# of turns between adding actions
+        int addNum  = 100;//# of actions to add
+
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
             int reps  = 1;
-            Eugenics e  = new Eugenics(image,20,20);
+            Eugenics e  = new Eugenics(image,population,initActions);
             AI goal     = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>());
             AI obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
 
@@ -70,8 +76,7 @@ public class Playground extends Application {
                 var lenActs=e.kids.get(0).actions.size()-1;
                 if(frame>=lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    int addRate = 1;//# of turns between adding actions
-                    e.evolve(e.kids,image,50,(reps%addRate)==0);
+                    e.evolve(e.kids,image,addNum,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }
