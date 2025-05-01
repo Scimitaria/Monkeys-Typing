@@ -16,9 +16,9 @@ There is also a shell script for ease of use:
 
 The main files are:
 
-###Playground:
+### Playground:
 An R&D ground for the algorithms. 
 Very barebones in terms of graphics, but a good way to test different parameters.
 
-###Mario (UNDER DEVELOPMENT):
+### Mario (UNDER DEVELOPMENT):
 mario
