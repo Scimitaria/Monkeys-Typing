@@ -15,20 +15,22 @@ import javafx.animation.AnimationTimer;
 public class Playground extends Application {
     @Override
     public void start(Stage stage) {
-        Image image = new Image("file:square.png");
+        Image image   = new Image("file:square.png");
         Image goalimg = new Image("file:goal.jpg");
+        Image obsimg  = new Image("file:obs.png");
         stage.setTitle("Monkeys Typing");
         Canvas canvas = new Canvas(800, 800);
         stage.setScene(new Scene(new StackPane(canvas)));
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.setFill(Color.WHITE);
         stage.show();
-
+//TODO: add bash file to run/set parameters
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
             int reps  = 1;
-            Eugenics e = new Eugenics(image,20,20);
-            AI goal = new AI(goalimg,new Vec2(100, 100),new ArrayList<Integer>());
+            Eugenics e  = new Eugenics(image,20,20);
+            AI goal     = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>());
+            AI obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
 
             public double distToGoal(AI ai){
                 var pos=ai.pos;
@@ -45,13 +47,14 @@ public class Playground extends Application {
                 for (int i = 0; i < e.kids.size() - 1; i++) {
                     var kid=e.kids.get(i);
                     //take action
-                    switch(kid.actions.get(frame)){
-                        case 0: kid.moveLeft();  break;
-                        case 1: kid.moveRight(); break;
-                        case 2: kid.moveUp();    break;
-                        case 3: kid.moveDown();  break;
-                        default: throw new IndexOutOfBoundsException("illegal movement command");
-                    }
+                    //TODO: make obstacle work
+                        switch(kid.actions.get(frame)){
+                            case 0: kid.moveLeft();  break;
+                            case 1: if(!kid.intersect(obstacle))kid.moveRight(); break;
+                            case 2: kid.moveUp();    break;
+                            case 3: kid.moveDown();  break;
+                            default: throw new IndexOutOfBoundsException("illegal movement command");
+                        }
                     kid.display(g);
 
                     if(kid.intersect(goal))System.exit(0);
@@ -61,13 +64,14 @@ public class Playground extends Application {
                     kid.pro = diff.intValue();
                 }
                 goal.display(g);
+                obstacle.display(g);
                 
                 frame++;
                 var lenActs=e.kids.get(0).actions.size()-1;
                 if(frame>=lenActs){
                     //can switch implementations of evolve to switch algorithms
                     int addRate = 1;//# of turns between adding actions
-                    e.evolve(e.kids,image,10,(reps%addRate)==0);
+                    e.evolve(e.kids,image,50,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }

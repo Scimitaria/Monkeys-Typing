@@ -18,10 +18,10 @@ public abstract class AIS {
   }
 
   public boolean intersect(AIS s) {
-    return !((this.pos.getX() > (s.pos.getX() + s.img.getWidth())) ||
-            (this.pos.getY() > (s.pos.getY() + s.img.getHeight())) ||
-          (this.pos.getX() + this.img.getWidth() < (s.pos.getX())) ||
-          (this.pos.getY() + this.img.getHeight() < (s.pos.getY())));
+    return !((this.pos.getX() > (s.pos.getX() + s.img.getWidth()))   ||
+             (this.pos.getY() > (s.pos.getY() + s.img.getHeight()))  ||
+             (this.pos.getX() + this.img.getWidth() < (s.pos.getX()))||
+             (this.pos.getY() + this.img.getHeight() < (s.pos.getY())));
   }
 
   public void move(Vec2 delta) {
