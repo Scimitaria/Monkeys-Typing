@@ -22,7 +22,7 @@ then if [[ "$1" =~ ^-?[0-9]+$ ]];
         population=${1:-50}
         initActions=${2:-100}
         addRate=${3:-1}
-        addNum=${4:-100}
+        addNum=${4:-$initActions}
      else fName=$1
      fi
 fi

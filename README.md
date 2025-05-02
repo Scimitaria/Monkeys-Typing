@@ -9,9 +9,24 @@ This program can be run manually with the standard gradle command:
 ./gradlew run -Pmain=cs2.AIP.<main file>
 ```
 
-There is also a shell script for ease of use:
+There is also a shell script for ease of use, which takes main function and parameters as argument:
 ```
-./run <main file>
+./run <main> <population> <initActions> <addRate> <addNum>
+```
+
+Main is the name of the file to run.
+Population is the starting number of agents.
+initActions is the starting number of actions.
+addRate is the number of iterations before new actions are added.
+addNum is the number of actions to add.
+
+Default values:
+```
+Main file   = Playground
+population  = 50
+initActions = 100
+addRate     = 1
+addNum      = initActions
 ```
 
 The main files are:
@@ -23,3 +38,8 @@ This is the default if no name is specified in the script.
 
 ### Mario (UNDER DEVELOPMENT):
 mario
+
+### run
+run is an execution shortcut for Monkeys Typing. 
+
+
