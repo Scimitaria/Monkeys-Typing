@@ -6,14 +6,17 @@
 
 #if a filename isn't provided,
 #default to Playground
-fName="Playground"
+Name="Playground"
 
+#default field values
 population=${2:-50}
 initActions=${3:-100}
 addRate=${4:-1}
 addNum=${5:-100}
 
+#if args
 if [[ $# -gt 0 ]]; #TODO: shift right?
+        #check if is int
 then if [[ "$1" =~ ^-?[0-9]+$ ]];
      then 
         population=${1:-50}
@@ -23,8 +26,5 @@ then if [[ "$1" =~ ^-?[0-9]+$ ]];
      else fName=$1
      fi
 fi
-
-echo $population
-echo $initActions
 
 ./gradlew run -Pmain=cs2.AIP.$fName
