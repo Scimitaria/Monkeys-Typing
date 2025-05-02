@@ -24,7 +24,7 @@ public class Playground extends Application {
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.setFill(Color.WHITE);
         stage.show();
-        //TODO: make these arg accessible?
+        //TODO: make these arg accessible
         int population  = 50;//size of starting population
         int initActions = 20;//# of actions to start
 
