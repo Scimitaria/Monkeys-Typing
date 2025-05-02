@@ -6,7 +6,7 @@
 
 #if a filename isn't provided,
 #default to Playground
-Name="Playground"
+fName="Playground"
 
 #default field values
 population=${2:-50}
