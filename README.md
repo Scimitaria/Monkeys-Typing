@@ -37,9 +37,4 @@ Very barebones in terms of graphics, but a good way to test different parameters
 This is the default if no name is specified in the script.
 
 ### Mario (UNDER DEVELOPMENT):
-mario
-
-### run
-run is an execution shortcut for Monkeys Typing. 
-
-
+mario 
