@@ -6,6 +6,25 @@
 
 #if a filename isn't provided,
 #default to Playground
-fName=${1:-"Playground"}
+fName="Playground"
+
+population=${2:-50}
+initActions=${3:-100}
+addRate=${4:-1}
+addNum=${5:-100}
+
+if [[ $# -gt 0 ]]; #TODO: shift right?
+then if [[ "$1" =~ ^-?[0-9]+$ ]];
+     then 
+        population=${1:-50}
+        initActions=${2:-100}
+        addRate=${3:-1}
+        addNum=${4:-100}
+     else fName=$1
+     fi
+fi
+
+echo $population
+echo $initActions
 
 ./gradlew run -Pmain=cs2.AIP.$fName

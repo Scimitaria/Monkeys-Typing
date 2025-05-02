@@ -26,7 +26,7 @@ public class Playground extends Application {
         stage.show();
         //TODO: make these arg accessible
         int population  = 50;//size of starting population
-        int initActions = 20;//# of actions to start
+        int initActions = 100;//# of actions to start
 
         int addRate = 1; //# of turns between adding actions
         int addNum  = 100;//# of actions to add
