@@ -1,4 +1,3 @@
-
 package cs2.AIP;
 
 import cs2.util.Vec2;
@@ -9,9 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Eugenics {
-  public ArrayList<AI> kids = new ArrayList<AI>();    //agents
-  ArrayList<Integer> acts = new ArrayList<Integer>(); //actions
-  ArrayList<Integer> pros = new ArrayList<Integer>(); //success evaluation
+  public ArrayList<AI> kids = new ArrayList<AI>();      //agents
+  ArrayList<Integer>   acts = new ArrayList<Integer>(); //actions
   Random rand = new Random();
 
   public Eugenics(Image ick, int population, int actionNum) {
@@ -35,20 +33,15 @@ public class Eugenics {
 
   //mixes attributes of the best agents to create the next generation
   //TODO: check w/ more than two
-  public ArrayList<Integer> procreate(ArrayList<Integer> a1,ArrayList<Integer> a2){
-    var len = a1.size();
-    if(len!=a2.size())throw new IndexOutOfBoundsException("lists are not of equal length");
-
+  public ArrayList<Integer> procreate(ArrayList<AI> ai){
     var kid=new ArrayList<Integer>();
     var coinflip=0;
-    var e = 0;
 
     //pick random between selections
-    for(int i=0;i<len;i++){
-      coinflip=rand.nextInt(2);
-      if(coinflip==1)e=a1.get(i);
-      else e=a2.get(i);
-      kid.add(i,e);
+    for(int i=0;i<ai.get(0).actions.size();i++){
+      //choose random parent
+      coinflip=rand.nextInt(ai.size());
+      kid.add(i,ai.get(coinflip).actions.get(i));
     }
     return kid;
   }
@@ -58,26 +51,30 @@ public class Eugenics {
    * based on success criteria. The best ones will
    * be selected to produce the next generation.
   */
-  public void evolve(ArrayList<AI> ai,Image image,int addNum,boolean addRate){
-    var len = ai.size();
+  public void evolve(ArrayList<AI> ai,Image image,int numParents,int addNum,boolean addRate){
     var children = new ArrayList<AI>();
+    ArrayList<AI> parents = new ArrayList<AI>();
+    int size = ai.size();
 
     //sort AI based on success evaluation
     sort(ai);
     //select top performers
-    var first  = ai.get(len-1);
-    var second = ai.get(len-2);
+    if (numParents >= size) parents = ai;
+    else parents = new ArrayList<>(ai.subList(size - numParents, size));
 
-    //reset actions
-    acts=new ArrayList<Integer>();
     for(int i=0;i<kids.size();i++){
-      acts=procreate(first.actions,second.actions);
+      //make new actions
+      acts=procreate(parents);
       if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
+
+      //add new agent
       children.add(new AI(image,new Vec2(400, 400),acts));
     }
     kids=children;
   }
 
+
+  //randomly generate new actions
   public AI type(AI ai,int level, int div){
     var len = ai.actions.size();
 
