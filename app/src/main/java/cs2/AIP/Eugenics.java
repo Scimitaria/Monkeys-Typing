@@ -39,7 +39,7 @@ public class Eugenics {
 
     //pick random between selections
     for(int i=0;i<ai.get(0).actions.size();i++){
-      coinflip=rand.nextInt(ai.size()-1);
+      coinflip=rand.nextInt(ai.size());
       kid.add(i,ai.get(coinflip).actions.get(i));
     }
     return kid;
@@ -52,24 +52,23 @@ public class Eugenics {
   */
   public void evolve(ArrayList<AI> ai,Image image,int numParents,int addNum,boolean addRate){
     var children = new ArrayList<AI>();
+    ArrayList<AI> parents = new ArrayList<AI>();
+    int size = ai.size();
 
     //sort AI based on success evaluation
     sort(ai);
     //select top performers
-    ArrayList<AI> parents = new ArrayList<>(ai.subList(0, Math.min(numParents, ai.size())));
+    if (numParents >= size) parents = ai;
+    else parents = new ArrayList<>(ai.subList(size - numParents, size));
 
     for(int i=0;i<kids.size();i++){
       //reset actions
       acts=new ArrayList<Integer>();
       acts=procreate(parents);
-      //System.out.println(acts.size());
       if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
-      //System.out.println(acts.size());
       children.add(new AI(image,new Vec2(400, 400),acts));
     }
     kids=children;
-    //System.out.println(kids.get(0).actions.size());
-    //System.out.println(acts.size());
   }
 
 

@@ -54,7 +54,6 @@ public class Playground extends Application {
             int reps  = 1;
 
             Eugenics e  = new Eugenics(image,population,initActions);
-            ArrayList<AI> kids = e.kids;
 
             AI goal     = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>());
             AI obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
@@ -66,13 +65,13 @@ public class Playground extends Application {
                 var b=Math.pow(Math.abs(pos.getY()-gpos.getY()),2);
                 return Math.sqrt(a+b);
             }
-            double initDist = distToGoal(kids.get(0));
+            double initDist = distToGoal(e.kids.get(0));
 
             @Override
             public void handle(long now) {
                 g.fillRect(0, 0, 800, 800);
-                for (int i = 0; i < kids.size() - 1; i++) {
-                    var kid = kids.get(i);
+                for (int i = 0; i < e.kids.size() - 1; i++) {
+                    var kid = e.kids.get(i);
                     //take action
                     //TODO: make obstacle work
                         switch(kid.actions.get(frame)){
@@ -94,12 +93,12 @@ public class Playground extends Application {
                 obstacle.display(g);
 
                 frame++;
-                var lenActs = kids.get(0).actions.size()-1;
+                var lenActs = e.kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
                     //TODO: parameterize algorithm switch
                     if(algorithmToggle)
-                         e.evolve(kids,image,numParents,addNum,(reps%addRate)==0);
+                         e.evolve(e.kids,image,numParents,addNum,(reps%addRate)==0);
                     else e.evolve(addNum,(reps%addRate)==0);
 
                     frame=0;
