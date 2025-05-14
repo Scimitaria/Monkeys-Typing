@@ -13,6 +13,8 @@ population=${2:-50}
 initActions=${3:-100}
 addRate=${4:-1}
 addNum=${5:-$initActions}
+numParents=${6:-2}
+algToggle=${7:-false}
 
 #if args
 if [[ $# -gt 0 ]]; #TODO: shift right?
@@ -23,8 +25,10 @@ then if [[ "$1" =~ ^-?[0-9]+$ ]];
         initActions=${2:-100}
         addRate=${3:-1}
         addNum=${4:-$initActions}
+        numParents=${5:-2}
+        algToggle=${6:-false}
      else fName=$1
      fi
 fi
 
-./gradlew run -Pmain=cs2.AIP.$fName --args="$population $initActions $addRate $addNum"
+./gradlew run -Pmain=cs2.AIP.$fName --args="$population $initActions $addRate $addNum $numParents $algToggle"

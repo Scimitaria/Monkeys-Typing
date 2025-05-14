@@ -32,7 +32,6 @@ public class Eugenics {
   }
 
   //mixes attributes of the best agents to create the next generation
-  //TODO: check w/ more than two
   public ArrayList<Integer> procreate(ArrayList<AI> ai){
     var kid=new ArrayList<Integer>();
     var coinflip=0;

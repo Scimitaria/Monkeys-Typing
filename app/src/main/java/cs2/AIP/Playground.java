@@ -47,7 +47,7 @@ public class Playground extends Application {
         int initActions = 100;//# of actions to start
         int addRate = 1;  //# of turns between adding actions
         int addNum  = 100;//# of actions to add
-        int numParents = 2; //# of parents for new generation
+        int numParents = 5; //# of parents for new generation
         boolean algorithmToggle = true;
 
         AnimationTimer timer = new AnimationTimer() {
