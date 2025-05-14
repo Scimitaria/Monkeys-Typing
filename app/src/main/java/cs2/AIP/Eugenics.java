@@ -20,6 +20,7 @@ public class Eugenics {
     }
   }
 
+  //custom instance of sort for AI
   public void sort(ArrayList<AI> AIlst){
     Collections.sort(kids,new Comparator<AI>(){
       public int compare(AI a1, AI a2){
