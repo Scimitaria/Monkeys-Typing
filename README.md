@@ -6,7 +6,7 @@ The backend framework for this algorithm was provided by the CS1 spacegame assig
 
 This program can be run manually with the standard gradle command:
 ```
-./gradlew run -Pmain=cs2.AIP.<main file>
+./gradlew run -Pmain=cs2.AIP.<main file> --args="<population> <initActions> <addRate> <addNum>"
 ```
 
 There is also a shell script for ease of use, which takes main function and parameters as argument:
