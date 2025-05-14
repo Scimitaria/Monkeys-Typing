@@ -42,15 +42,18 @@ public class Playground extends Application {
         List<String> args = params.getRaw();
 
         //TODO: get arg assignment to work
-        int population  = 50;//size of starting population
+        int population  = 50; //size of starting population
         int initActions = 100;//# of actions to start
-        int addRate = 1; //# of turns between adding actions
+        int addRate = 1;  //# of turns between adding actions
         int addNum  = 100;//# of actions to add
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
             int reps  = 1;
+
             Eugenics e  = new Eugenics(image,population,initActions);
+            ArrayList<AI> kids = e.kids;
+
             AI goal     = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>());
             AI obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
 
@@ -61,13 +64,13 @@ public class Playground extends Application {
                 var b=Math.pow(Math.abs(pos.getY()-gpos.getY()),2);
                 return Math.sqrt(a+b);
             }
-            double initDist = distToGoal(e.kids.get(0));
+            double initDist = distToGoal(kids.get(0));
 
             @Override
             public void handle(long now) {
                 g.fillRect(0, 0, 800, 800);
-                for (int i = 0; i < e.kids.size() - 1; i++) {
-                    var kid=e.kids.get(i);
+                for (int i = 0; i < kids.size() - 1; i++) {
+                    var kid = kids.get(i);
                     //take action
                     //TODO: make obstacle work
                         switch(kid.actions.get(frame)){
@@ -89,10 +92,11 @@ public class Playground extends Application {
                 obstacle.display(g);
                 
                 frame++;
-                var lenActs=e.kids.get(0).actions.size()-1;
-                if(frame>=lenActs){
+                var lenActs = kids.get(0).actions.size()-1;
+                if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    e.evolve(e.kids,image,addNum,(reps%addRate)==0);
+                    //e.kids,image,
+                    e.evolve(addNum,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }

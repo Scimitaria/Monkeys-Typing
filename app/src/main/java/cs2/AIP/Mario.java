@@ -35,15 +35,18 @@ public class Mario extends Application{
         // The raw, position‑based args exactly as typed
         List<String> args = params.getRaw();
 
-        int population  = 50;//size of starting population
+        int population  = 50; //size of starting population
         int initActions = 100;//# of actions to start
-        int addRate = 1; //# of turns between adding actions
+        int addRate = 1;  //# of turns between adding actions
         int addNum  = 100;//# of actions to add
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
             int reps  = 1;
+
             Eugenics e  = new Eugenics(placeholder,population,initActions);
+            ArrayList<AI> kids = e.kids;
+
             AI goal     = new AI(flagimg,new Vec2(650, 400),new ArrayList<Integer>());
 
             public double distToGoal(AI ai){
@@ -53,14 +56,14 @@ public class Mario extends Application{
                 var b=Math.pow(Math.abs(pos.getY()-gpos.getY()),2);
                 return Math.sqrt(a+b);
             }
-            double initDist = distToGoal(e.kids.get(0));
+            double initDist = distToGoal(kids.get(0));
 
             @Override
             public void handle(long now) {
                 g.fillRect(0, 0, 800, 800);
 
-                for (int i = 0; i < e.kids.size() - 1; i++) {
-                    var kid=e.kids.get(i);
+                for (int i = 0; i < kids.size() - 1; i++) {
+                    var kid=kids.get(i);
 
                     //TODO: make Mario
 
@@ -74,10 +77,10 @@ public class Mario extends Application{
                 }
 
                 frame++;
-                var lenActs=e.kids.get(0).actions.size()-1;
-                if(frame>=lenActs){
+                var lenActs = kids.get(0).actions.size()-1;
+                if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    e.evolve(e.kids,placeholder,addNum,(reps%addRate)==0);
+                    e.evolve(kids,placeholder,addNum,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }
