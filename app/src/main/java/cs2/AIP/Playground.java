@@ -90,13 +90,15 @@ public class Playground extends Application {
                 }
                 goal.display(g);
                 obstacle.display(g);
-                
+
                 frame++;
                 var lenActs = kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    //e.kids,image,
+                    //TODO: parameterize algorithm switch
                     e.evolve(addNum,(reps%addRate)==0);
+                    //e.evolve(kids,image,addNum,(reps%addRate)==0);
+
                     frame=0;
                     reps++;
                 }

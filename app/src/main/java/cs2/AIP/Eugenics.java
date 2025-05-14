@@ -8,9 +8,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Eugenics {
-  public ArrayList<AI> kids = new ArrayList<AI>();    //agents
-  ArrayList<Integer> acts = new ArrayList<Integer>(); //actions
-  ArrayList<Integer> pros = new ArrayList<Integer>(); //success evaluation
+  public ArrayList<AI> kids = new ArrayList<AI>();      //agents
+  ArrayList<Integer>   acts = new ArrayList<Integer>(); //actions
   Random rand = new Random();
 
   public Eugenics(Image ick, int population, int actionNum) {
@@ -19,6 +18,16 @@ public class Eugenics {
       for (int k = 0; k < actionNum; k++) acts.add(rand.nextInt(4));
       kids.add(new AI(ick, new Vec2(400, 400), acts));
     }
+  }
+
+  public void sort(ArrayList<AI> AIlst){
+    Collections.sort(kids,new Comparator<AI>(){
+      public int compare(AI a1, AI a2){
+        if(a1.pro>a2.pro) return 1;
+        if(a1.pro<a2.pro) return -1;
+        return 0;
+      }
+    });
   }
 
   //mixes attributes of the best agents to create the next generation
@@ -39,16 +48,6 @@ public class Eugenics {
       kid.add(i,e);
     }
     return kid;
-  }
-
-  public void sort(ArrayList<AI> AIlst){
-    Collections.sort(kids,new Comparator<AI>(){
-      public int compare(AI a1, AI a2){
-        if(a1.pro>a2.pro) return 1;
-        if(a1.pro<a2.pro) return -1;
-        return 0;
-      }
-    });
   }
 
   /*Genetic Algorithm
@@ -76,6 +75,7 @@ public class Eugenics {
     kids=children;
   }
 
+  //randomly generate new actions
   public AI type(AI ai,int level, int div){
     var len = ai.actions.size();
 
@@ -88,7 +88,6 @@ public class Eugenics {
         case 1: for(int j = 0; j < len - 1; j += rand.nextInt(div / 2)) ai.actions.set(i, rand.nextInt(4)); break;
       }
     }
-    ai.pos = new Vec2(400, 400);
 
     return ai;
   }
@@ -108,15 +107,18 @@ public class Eugenics {
     //sort AI based on success evaluation
     sort(kids);
 
-    //TODO: this is the problem; pros is unnecessary but can't be removed
-    //index out of bounds on initActions when switching to kids
-    for (int fg = 0; fg < pros.size(); fg++) {
-      var p=pros.get(fg);
+    for (int fg = 0; fg < kids.size(); fg++) {
       var kid=kids.get(fg);
+      //reset position
+      kid.pos = new Vec2(400, 400);
 
-      if(p < len / 2) type(kid,2,len);
-      if((fg > 9) && (fg < len * 3 / 4)) type(kid,2,len);
-      if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
-  }
+      //least successful change most
+      if(kid.pro < len / 2) type(kid,2,len);
+      //more successful change less; most successful don't change
+      if((fg > (len / 2)) && (fg < len * (3 / 4))) type(kid,1,len);
+
+      //add additional random actions
+      if(addRate) for(int j=0;j<addNum;j++) kid.actions.add(rand.nextInt(4));
+    }
   }
 }
