@@ -9,25 +9,41 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.util.ArrayList;
+import java.util.List;
 import cs2.util.Vec2;
 import javafx.animation.AnimationTimer;
 
+//run with ./gradlew run -Pmain=cs2.AIP.Playground --args="<args>"
 public class Playground extends Application {
+    public static void main(String[] args) {
+        // Forward the raw command‑line arguments to JavaFX
+        Application.launch(Playground.class, args);
+    }
+
+    public Integer toInt(String s){
+        return Integer.parseInt(s);
+    }
+
     @Override
     public void start(Stage stage) {
         Image image   = new Image("file:square.png");
         Image goalimg = new Image("file:goal.jpg");
         Image obsimg  = new Image("file:obs.png");
-        stage.setTitle("Monkeys Typing");
         Canvas canvas = new Canvas(800, 800);
+        stage.setTitle("Monkeys Typing");
         stage.setScene(new Scene(new StackPane(canvas)));
         GraphicsContext g = canvas.getGraphicsContext2D();
         g.setFill(Color.WHITE);
         stage.show();
-        //TODO: make these arg accessible
+
+        // Retrieve them here
+        Parameters params = getParameters();
+        // The raw, position‑based args exactly as typed
+        List<String> args = params.getRaw();
+
+        //TODO: get arg assignment to work
         int population  = 50;//size of starting population
         int initActions = 100;//# of actions to start
-
         int addRate = 1; //# of turns between adding actions
         int addNum  = 100;//# of actions to add
 
