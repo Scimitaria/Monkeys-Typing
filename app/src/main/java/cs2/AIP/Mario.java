@@ -39,6 +39,7 @@ public class Mario extends Application{
         int initActions = 100;//# of actions to start
         int addRate = 1;  //# of turns between adding actions
         int addNum  = 100;//# of actions to add
+        int numParents = 2; //# of parents for new generation
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
@@ -80,7 +81,7 @@ public class Mario extends Application{
                 var lenActs = kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    e.evolve(kids,placeholder,addNum,(reps%addRate)==0);
+                    //e.evolve(kids,placeholder,numParents,addNum,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }
