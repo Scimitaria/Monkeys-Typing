@@ -22,6 +22,17 @@ public class Eugenics {
     }
   }
 
+  //custom instance of sort for AI
+  public void sort(ArrayList<AI> AIlst){
+    Collections.sort(kids,new Comparator<AI>(){
+      public int compare(AI a1, AI a2){
+        if(a1.pro>a2.pro) return 1;
+        if(a1.pro<a2.pro) return -1;
+        return 0;
+      }
+    });
+  }
+
   //mixes attributes of the best agents to create the next generation
   //TODO: check w/ more than two
   public ArrayList<Integer> procreate(ArrayList<Integer> a1,ArrayList<Integer> a2){
@@ -52,13 +63,7 @@ public class Eugenics {
     var children = new ArrayList<AI>();
 
     //sort AI based on success evaluation
-    Collections.sort(ai,new Comparator<AI>(){
-      public int compare(AI a1, AI a2){
-        if(a1.pro>a2.pro) return 1;
-        if(a1.pro<a2.pro) return -1;
-        return 0; 
-      }
-    });
+    sort(ai);
     //select top performers
     var first  = ai.get(len-1);
     var second = ai.get(len-2);
@@ -78,15 +83,17 @@ public class Eugenics {
 
     //randomize based on success evaluation
     for(int i=0;i<len;i++){
+      //vary randomly based on level
+      //level is based on success eval
       switch (level){
         case 2: for(int j = 0; j < len - 1; j += rand.nextInt(div / 10)) ai.actions.set(i, rand.nextInt(4)); break;
         case 1: for(int j = 0; j < len - 1; j += rand.nextInt(div / 2)) ai.actions.set(i, rand.nextInt(4)); break;
       }
     }
+
     return ai;
   }
 
-  //TODO: fix MT
   /*Monkeys Typing variant
    * Similar concept to the Genetic Algorithm,
    * but without the selection of top agents.
@@ -97,19 +104,23 @@ public class Eugenics {
    * This algorithm is terrible lol
   */
   public void evolve(int addNum,boolean addRate) {
-    pros = new ArrayList<Integer>();
     var len=kids.size();
-    for (int j = 0; j < len; j++) pros.add(kids.get(j).pro);
-    Collections.sort(pros);
-    for (int fg = 0; fg < pros.size(); fg++) {
-      var p=pros.get(fg);
+
+    //sort AI based on success evaluation
+    sort(kids);
+
+    for (int fg = 0; fg < kids.size(); fg++) {
       var kid=kids.get(fg);
-      if (p == kid.pro){
-        kid.pos = new Vec2(400, 400);
-        if(p < len / 2) type(kid,2,len);
-        if((fg > 9) && (fg < len * 3 / 4)) type(kid,2,len);
-        if(addRate) for(int j=0;j<addNum;j++) acts.add(rand.nextInt(4));
-      }
+      //reset position
+      kid.pos = new Vec2(400, 400);
+
+      //least successful change most
+      if(kid.pro < len / 2) type(kid,2,len);
+      //more successful change less; most successful don't change
+      if((fg > (len / 2)) && (fg < len * (3 / 4))) type(kid,1,len);
+
+      //add additional random actions
+      if(addRate) for(int j=0;j<addNum;j++) kid.actions.add(rand.nextInt(4));
     }
   }
 }

@@ -27,9 +27,10 @@ public class Playground extends Application {
         //TODO: make these arg accessible
         int population  = 50;//size of starting population
         int initActions = 100;//# of actions to start
-
         int addRate = 1; //# of turns between adding actions
         int addNum  = 100;//# of actions to add
+        int numParents = 2; //# of parents for new generation
+        boolean algorithmToggle = true;
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
@@ -76,7 +77,9 @@ public class Playground extends Application {
                 var lenActs=e.kids.get(0).actions.size()-1;
                 if(frame>=lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    e.evolve(e.kids,image,addNum,(reps%addRate)==0);
+                    if(algorithmToggle)
+                         e.evolve(e.kids,image,addNum,(reps%addRate)==0);
+                    else e.evolve(addNum,(reps%addRate)==0);
                     frame=0;
                     reps++;
                 }
