@@ -31,6 +31,7 @@ public class Eugenics {
     });
   }
 
+
   //mixes attributes of the best agents to create the next generation
   public ArrayList<Integer> procreate(ArrayList<AI> ai){
     var kid=new ArrayList<Integer>();
@@ -72,7 +73,7 @@ public class Eugenics {
     kids=children;
   }
 
-
+//TODO: MT only works on populations 20+
   //randomly generate new actions
   public AI type(AI ai,int level, int div){
     var len = ai.actions.size();
@@ -82,8 +83,8 @@ public class Eugenics {
       //vary randomly based on level
       //level is based on success eval
       switch (level){
-        case 2: for(int j = 0; j < len - 1; j += rand.nextInt(div / 10)) ai.actions.set(i, rand.nextInt(4)); break;
-        case 1: for(int j = 0; j < len - 1; j += rand.nextInt(div / 2)) ai.actions.set(i, rand.nextInt(4)); break;
+        case 2: for(int j = 0; j < len; j += rand.nextInt(div / 10)) if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
+        case 1: for(int j = 0; j < len; j += rand.nextInt(div / 2))  if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
       }
     }
 

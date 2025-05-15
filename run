@@ -14,7 +14,7 @@ initActions=${3:-100}
 addRate=${4:-1}
 addNum=${5:-$initActions}
 numParents=${6:-2}
-algToggle=${7:-false}
+algToggle=${7:-true}
 
 #if args
 if [[ $# -gt 0 ]]; #TODO: shift right?
@@ -26,7 +26,9 @@ then if [[ "$1" =~ ^-?[0-9]+$ ]];
         addRate=${3:-1}
         addNum=${4:-$initActions}
         numParents=${5:-2}
-        algToggle=${6:-false}
+        algToggle=${6:-true}
+     elif [[ "$1" = "false" || "$1" = "False" ]];
+     then algToggle=$1
      else fName=$1
      fi
 fi

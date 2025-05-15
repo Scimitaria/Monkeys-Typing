@@ -2,6 +2,10 @@ package cs2.AIP;
 
 import cs2.util.Vec2;
 import java.util.List;
+
+import org.checkerframework.checker.units.qual.K;
+
+import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
@@ -24,6 +28,14 @@ public class Playground extends Application {
         return Integer.parseInt(s);
     }
 
+    public boolean toBool(String s){
+        switch(s){
+            case  "true": case  "True": return  true;
+            case "false": case "False": return false;
+            default: throw new WrongMethodTypeException("arg is not a recognized bool");
+        }
+    }
+
     @Override
     public void start(Stage stage) {
         //set up graphics window
@@ -41,14 +53,14 @@ public class Playground extends Application {
         Parameters params = getParameters();
         // The raw, position‑based args exactly as typed
         List<String> args = params.getRaw();
+        int argLen = args.size();
 
-        //TODO: get arg assignment to work
-        int population  = 50; //size of starting population
-        int initActions = 100;//# of actions to start
-        int addRate = 1;  //# of turns between adding actions
-        int addNum  = 100;//# of actions to add
-        int numParents = 2; //# of parents for new generation
-        boolean algorithmToggle = true;
+        int population  = (argLen>0) ? toInt(args.get(0)) : 50; //size of starting population
+        int initActions = (argLen>1) ? toInt(args.get(1)) : 100;//# of actions to start
+        int addRate     = (argLen>2) ? toInt(args.get(2)) : 1;  //# of turns between adding actions
+        int addNum      = (argLen>3) ? toInt(args.get(3)) : 100;//# of actions to add
+        int numParents  = (argLen>4) ? toInt(args.get(4)) : 2;  //# of parents for new generation
+        boolean algorithmToggle = (argLen>5) ? toBool(args.get(5)) : true;//choose algorithm
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;
@@ -97,7 +109,6 @@ public class Playground extends Application {
                 var lenActs = e.kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
-                    //TODO: parameterize algorithm switch
                     if(algorithmToggle)
                          e.evolve(e.kids,image,numParents,addNum,(reps%addRate)==0);
                     else e.evolve(addNum,(reps%addRate)==0);
