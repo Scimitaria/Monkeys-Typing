@@ -2,6 +2,7 @@ package cs2.AIP;
 
 import cs2.util.Vec2;
 import java.util.List;
+import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.animation.AnimationTimer;
@@ -19,6 +20,19 @@ public class Mario extends Application{
         // Forward the raw command‑line arguments to JavaFX
         Application.launch(Playground.class, args);
     }
+    
+        public Integer toInt(String s){
+        return Integer.parseInt(s);
+    }
+
+    public boolean toBool(String s){
+        switch(s){
+            case  "true": case  "True": return  true;
+            case "false": case "False": return false;
+            default: throw new WrongMethodTypeException("arg is not a recognized bool");
+        }
+    }
+    
     @Override
     public void start(Stage stage) {
         Image placeholder   = new Image("file:square.png");
@@ -34,13 +48,14 @@ public class Mario extends Application{
         Parameters params = getParameters();
         // The raw, position‑based args exactly as typed
         List<String> args = params.getRaw();
+        int argLen = args.size();
 
-        int population  = 50; //size of starting population
-        int initActions = 100;//# of actions to start
-        int addRate = 1;  //# of turns between adding actions
-        int addNum  = 100;//# of actions to add
-        int numParents = 5; //# of parents for new generation
-        boolean algorithmToggle = true;
+        int population  = (argLen>0) ? toInt(args.get(0)) : 50; //size of starting population
+        int initActions = (argLen>1) ? toInt(args.get(1)) : 100;//# of actions to start
+        int addRate     = (argLen>2) ? toInt(args.get(2)) : 1;  //# of turns between adding actions
+        int addNum      = (argLen>3) ? toInt(args.get(3)) : 100;//# of actions to add
+        int numParents  = (argLen>4) ? toInt(args.get(4)) : 2;  //# of parents for new generation
+        boolean algorithmToggle = (argLen>5) ? toBool(args.get(5)) : true;//choose algorithm
 
         AnimationTimer timer = new AnimationTimer() {
             int frame = 0;

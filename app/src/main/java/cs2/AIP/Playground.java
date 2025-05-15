@@ -3,8 +3,6 @@ package cs2.AIP;
 import cs2.util.Vec2;
 import java.util.List;
 
-import org.checkerframework.checker.units.qual.K;
-
 import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
 import javafx.application.Application;
