@@ -46,5 +46,5 @@ mario
 ## Notes on use:
 Increasing population size increases time to convergence, but increases the likelihood of an optimal set of actions being found.  
 Increasing initial and additional action also increases time to convergence, but increasing them too much can make it difficult to optimize the path.  
-Increasing the add rate will decrease the frequency with which new actions are added. This allows more time for the agents to achieve convergence, but also limits their progress. As such, this parameter decreasing this parameter will increase speed at some loss in performance.  
+Increasing the add rate will decrease the frequency with which new actions are added. This allows more time for the agents to achieve convergence, but also limits their progress. As such, decreasing this parameter will increase speed at some loss in performance.  
 Increasing the number of parents in the genetic algorithm increases randomness in which actions are selected. This isn't normally desirable, but when dealing with obstacles some randomness is necessary to find a path around.  
