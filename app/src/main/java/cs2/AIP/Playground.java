@@ -55,6 +55,10 @@ public class Playground extends Application {
         List<String> args = params.getRaw();
         int argLen = args.size();
 
+        //TODO: MT stops working when run uses certain params
+        //if<20 freezes, if < 10 errs
+        //java cpu usage jumps to 100% - computation error causing excess usage?
+        //could be shell script autoterminating if so
         int population  = (argLen>0) ? toInt(args.get(0)) : 50; //size of starting population
         int initActions = (argLen>1) ? toInt(args.get(1)) : 100;//# of actions to start
         int addRate     = (argLen>2) ? toInt(args.get(2)) : 1;  //# of turns between adding actions

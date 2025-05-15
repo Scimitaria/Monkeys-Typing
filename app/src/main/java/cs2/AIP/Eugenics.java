@@ -73,7 +73,6 @@ public class Eugenics {
     kids=children;
   }
 
-//TODO: MT only works on populations 20+
   //randomly generate new actions
   public AI type(AI ai,int level, int div){
     var len = ai.actions.size();
