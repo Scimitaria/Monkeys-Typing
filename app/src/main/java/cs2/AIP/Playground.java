@@ -2,11 +2,7 @@ package cs2.AIP;
 
 import cs2.util.Vec2;
 import java.util.List;
-
-import java.lang.invoke.WrongMethodTypeException;
 import java.util.ArrayList;
-import javafx.application.Application;
-import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -14,6 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.StackPane;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.application.Application;
+import javafx.animation.AnimationTimer;
+import java.lang.invoke.WrongMethodTypeException;
 
 //run with ./gradlew run -Pmain=cs2.AIP.Playground --args="<args>"
 public class Playground extends Application {
@@ -37,9 +36,9 @@ public class Playground extends Application {
     @Override
     public void start(Stage stage) {
         //set up graphics window
-        Image image   = new Image("file:square.png");
-        Image goalimg = new Image("file:goal.jpg");
-        Image obsimg  = new Image("file:obs.png");
+        Image image   = new Image("file:square.png"),
+              goalimg = new Image("file:goal.jpg"),
+              obsimg  = new Image("file:obs.png");
         Canvas canvas = new Canvas(800, 800);
         stage.setTitle("Monkeys Typing");
         stage.setScene(new Scene(new StackPane(canvas)));
@@ -54,24 +53,24 @@ public class Playground extends Application {
         int argLen = args.size();
 
         //TODO: MT stops working when run uses certain params
-        //if<20 freezes, if < 10 errs
-        //java cpu usage jumps to 100% - computation error causing excess usage?
-        //could be shell script autoterminating if so
-        int population  = (argLen>0) ? toInt(args.get(0)) : 50; //size of starting population
-        int initActions = (argLen>1) ? toInt(args.get(1)) : 100;//# of actions to start
-        int addRate     = (argLen>2) ? toInt(args.get(2)) : 1;  //# of turns between adding actions
-        int addNum      = (argLen>3) ? toInt(args.get(3)) : 100;//# of actions to add
-        int numParents  = (argLen>4) ? toInt(args.get(4)) : 2;  //# of parents for new generation
+        /*if<20 freezes, if < 10 errs
+        * java cpu usage jumps to 100% - computation error causing excess usage?
+        * could be shell script autoterminating if so
+        * GA doesn't crack even at 100,000 agents though*/
+        int population  = (argLen>0) ? toInt(args.get(0)) : 50,        //size of starting population
+            initActions = (argLen>1) ? toInt(args.get(1)) : 100,       //# of actions to start
+            addRate     = (argLen>2) ? toInt(args.get(2)) : 1,         //# of turns between adding actions
+            addNum      = (argLen>3) ? toInt(args.get(3)) : population,//# of actions to add
+            numParents  = (argLen>4) ? toInt(args.get(4)) : 2;         //# of parents for new generation
         boolean algorithmToggle = (argLen>5) ? toBool(args.get(5)) : true;//choose algorithm
 
         AnimationTimer timer = new AnimationTimer() {
-            int frame = 0;
-            int reps  = 1;
+            int frame = 0,reps = 1;
 
             Eugenics e  = new Eugenics(image,population,initActions);
 
-            AI goal     = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>());
-            AI obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
+            AI goal  = new AI(goalimg,new Vec2(650, 400),new ArrayList<Integer>()),
+            obstacle = new AI(obsimg,new Vec2(500, 375),new ArrayList<Integer>());
 
             public double distToGoal(AI ai){
                 var pos=ai.pos;

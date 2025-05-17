@@ -35,8 +35,8 @@ public class Mario extends Application{
     
     @Override
     public void start(Stage stage) {
-        Image placeholder   = new Image("file:square.png");
-        Image flagimg       = new Image("flag.png");
+        Image placeholder = new Image("file:square.png"),
+              flagimg     = new Image("flag.png");
         stage.setTitle("Monkeys Typing");
         Canvas canvas = new Canvas(800, 800);
         stage.setScene(new Scene(new StackPane(canvas)));
@@ -58,13 +58,12 @@ public class Mario extends Application{
         boolean algorithmToggle = (argLen>5) ? toBool(args.get(5)) : true;//choose algorithm
 
         AnimationTimer timer = new AnimationTimer() {
-            int frame = 0;
-            int reps  = 1;
+            int frame = 0,reps = 1;
 
             Eugenics e  = new Eugenics(placeholder,population,initActions);
             ArrayList<AI> kids = e.kids;
 
-            AI goal     = new AI(flagimg,new Vec2(650, 400),new ArrayList<Integer>());
+            AI goal  = new AI(flagimg,new Vec2(650, 400),new ArrayList<Integer>());
 
             public double distToGoal(AI ai){
                 var pos=ai.pos;
