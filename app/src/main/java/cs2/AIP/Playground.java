@@ -84,15 +84,15 @@ public class Playground extends Application {
             @Override
             public void handle(long now) {
                 g.fillRect(0, 0, 800, 800);
-                for (int i = 0; i < e.kids.size() - 1; i++) {
-                    var kid = e.kids.get(i);
+                for(AI kid: e.kids){
                     //take action
-                    //TODO: make obstacle work
+                    //TODO: will need to check multiple collisions - any [intersect,intersect]?
+                    //TODO: is this multithreaded?
                         switch(kid.actions.get(frame)){
-                            case 0: kid.moveLeft();  break;
-                            case 1: if(!kid.intersect(obstacle))kid.moveRight(); break;
-                            case 2: kid.moveUp();    break;
-                            case 3: kid.moveDown();  break;
+                            case 0: if(!kid.intersectLeft(obstacle))  kid.moveLeft();  break;
+                            case 1: if(!kid.intersectRight(obstacle)) kid.moveRight(); break;
+                            case 2: if(!kid.intersectTop(obstacle))   kid.moveUp();    break;
+                            case 3: if(!kid.intersectBottom(obstacle))kid.moveDown();  break;
                             default: throw new IndexOutOfBoundsException("illegal movement command");
                         }
                     kid.display(g);
@@ -102,7 +102,7 @@ public class Playground extends Application {
                     //success evaluation
                     Double diff = initDist-distToGoal(kid);
                     kid.pro = diff.intValue();
-                }
+                };
                 goal.display(g);
                 obstacle.display(g);
 

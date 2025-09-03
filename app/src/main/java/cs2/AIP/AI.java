@@ -32,9 +32,75 @@ public class AI extends AIS {
   }
 
   public boolean intersect(AIS s){
-    return !((this.pos.getX() > (s.pos.getX() + s.img.getWidth()))   ||
-             (this.pos.getY() > (s.pos.getY() + s.img.getHeight()))  ||
-             (this.pos.getX() + this.img.getWidth() < (s.pos.getX()))||
-             (this.pos.getY() + this.img.getHeight() < (s.pos.getY())));
+    double thisTop    = this.pos.getY(),
+           thisLeft   = this.pos.getX(),
+           thisRight  = this.pos.getX()+this.img.getWidth(),
+           thisBottom = this.pos.getY()+this.img.getHeight(),
+           sTop    = s.pos.getY(),
+           sLeft   = s.pos.getX(),
+           sRight  = s.pos.getX()+s.img.getWidth(),
+           sBottom = s.pos.getY()+s.img.getHeight();
+
+    return !((thisLeft > sRight) ||
+             (thisTop > sBottom) ||
+             (thisRight < sLeft) ||
+             (thisBottom < sTop));
+  }
+
+  public boolean intersectTop(AIS s){
+    double thisTop    = this.pos.getY(),
+           thisLeft   = this.pos.getX(),
+           thisRight  = this.pos.getX()+this.img.getWidth(),
+           thisBottom = this.pos.getY()+this.img.getHeight(),
+           sLeft   = s.pos.getX(),
+           sRight  = s.pos.getX()+s.img.getWidth(),
+           sBottom = s.pos.getY()+s.img.getHeight();
+
+    return ((thisLeft < sRight)  &&
+            (thisTop <= sBottom) &&
+            (thisRight > sLeft)  &&
+            (thisBottom >= sBottom));
+  }
+  public boolean intersectLeft(AIS s){
+    double thisTop    = this.pos.getY(),
+           thisLeft   = this.pos.getX(),
+           thisRight  = this.pos.getX()+this.img.getWidth(),
+           thisBottom = this.pos.getY()+this.img.getHeight(),
+           sTop    = s.pos.getY(),
+           sRight  = s.pos.getX()+s.img.getWidth(),
+           sBottom = s.pos.getY()+s.img.getHeight();
+
+    return ((thisLeft <= sRight)  &&
+            (thisTop < sBottom)   &&
+            (thisRight >= sRight) &&
+            (thisBottom > sTop));
+  }
+  public boolean intersectRight(AIS s){
+    double thisTop    = this.pos.getY(),
+           thisLeft   = this.pos.getX(),
+           thisRight  = this.pos.getX()+this.img.getWidth(),
+           thisBottom = this.pos.getY()+this.img.getHeight(),
+           sTop    = s.pos.getY(),
+           sLeft   = s.pos.getX(),
+           sBottom = s.pos.getY()+s.img.getHeight();
+
+    return ((thisLeft <= sLeft)  &&
+            (thisTop < sBottom)  &&
+            (thisRight >= sLeft) &&
+            (thisBottom > sTop));
+  }
+  public boolean intersectBottom(AIS s){
+    double thisTop    = this.pos.getY(),
+           thisLeft   = this.pos.getX(),
+           thisRight  = this.pos.getX()+this.img.getWidth(),
+           thisBottom = this.pos.getY()+this.img.getHeight(),
+           sTop    = s.pos.getY(),
+           sLeft   = s.pos.getX(),
+           sRight  = s.pos.getX()+s.img.getWidth();
+
+    return ((thisLeft < sRight)  &&
+            (thisTop <= sTop) &&
+            (thisRight > sLeft) &&
+            (thisBottom >= sTop));
   }
 }
