@@ -26,7 +26,7 @@ then if [[ "$1" =~ ^-?[0-9]+$ ]];
         addRate=${3:-1}
         addNum=${4:-$initActions}
         numParents=${5:-2}
-        algToggle=${6:-false}
+        algToggle=${6:-true}
      elif [[ "$1" = "false" || "$1" = "False" ]];
      then algToggle=$1
      else fName=$1
