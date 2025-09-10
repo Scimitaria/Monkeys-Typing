@@ -52,11 +52,6 @@ public class Playground extends Application {
         List<String> args = params.getRaw();
         int argLen = args.size();
 
-        //TODO: MT stops working when run uses certain params
-        /*if<20 freezes, if < 10 errs
-        * java cpu usage jumps to 100% - computation error causing excess usage?
-        * could be shell script autoterminating if so
-        * GA doesn't crack even at 100,000 agents though*/
         int population  = (argLen>0) ? toInt(args.get(0)) : 50,        //size of starting population
             initActions = (argLen>1) ? toInt(args.get(1)) : 100,       //# of actions to start
             addRate     = (argLen>2) ? toInt(args.get(2)) : 1,         //# of turns between adding actions
@@ -87,7 +82,6 @@ public class Playground extends Application {
                 for(AI kid: e.kids){
                     //take action
                     //TODO: will need to check multiple collisions - any [intersect,intersect]?
-                    //TODO: is this multithreaded?
                         switch(kid.actions.get(frame)){
                             case 0: if(!kid.intersectLeft(obstacle))  kid.moveLeft();  break;
                             case 1: if(!kid.intersectRight(obstacle)) kid.moveRight(); break;
@@ -107,6 +101,7 @@ public class Playground extends Application {
                 obstacle.display(g);
 
                 frame++;
+                System.out.println(frame);
                 var lenActs = e.kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms

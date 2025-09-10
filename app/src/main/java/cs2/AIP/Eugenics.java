@@ -74,7 +74,7 @@ public class Eugenics {
   }
 
   //randomly generate new actions
-  public AI type(AI ai,int level, int div){
+  public AI type(AI ai,int level){
     var len = ai.actions.size();
 
     //randomize based on success evaluation
@@ -82,8 +82,8 @@ public class Eugenics {
       //vary randomly based on level
       //level is based on success eval
       switch (level){
-        case 2: for(int j = 0; j < len; j += rand.nextInt(div / 10)) if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
-        case 1: for(int j = 0; j < len; j += rand.nextInt(div / 2))  if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
+        case 2: for(int j = 0; j < len; j += rand.nextInt(len / 10)) if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
+        case 1: for(int j = 0; j < len; j += rand.nextInt(len / 2))  if(j < len) ai.actions.set(i, rand.nextInt(4)); break;
       }
     }
 
@@ -105,15 +105,14 @@ public class Eugenics {
     //sort AI based on success evaluation
     sort(kids);
 
-    for (int fg = 0; fg < kids.size(); fg++) {
+    for (int fg = 0; fg < len; fg++) {
       var kid=kids.get(fg);
       //reset position
       kid.pos = new Vec2(400, 400);
-
       //least successful change most
-      if(kid.pro < len / 2) type(kid,2,len);
+      if(kid.pro < len / 2) type(kid,2);
       //more successful change less; most successful don't change
-      if((fg > (len / 2)) && (fg < len * (3 / 4))) type(kid,1,len);
+      if((fg > (len / 2)) && (fg < len * (3 / 4))) type(kid,1);
 
       //add additional random actions
       if(addRate) for(int j=0;j<addNum;j++) kid.actions.add(rand.nextInt(4));
