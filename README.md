@@ -5,12 +5,12 @@ It's a bit rough, as I came up with the idea in my freshman year of college, but
 The backend framework for this algorithm was provided by the CS1 spacegame assignment - thanks Dr. Hibbs!
 
 This program can be run manually with the standard gradle command:
-```zsh
+```bash
 ./gradlew run -Pmain=cs2.AIP.<main file> --args="<population> <initActions> <addRate> <addNum>"
 ```
 
 There is also a shell script for ease of use, which takes main function and parameters as argument:
-```zsh
+```bash
 ./run <main> <population> <initActions> <addRate> <addNum> <numParents> <algToggle>
 ```
 
@@ -23,7 +23,7 @@ There is also a shell script for ease of use, which takes main function and para
 - algToggle: switches between the Genetic Algorithm and Monkeys Typing. True selects GA; false is MT.
 
 Default values:
-```zsh
+```bash
 Main file   = Playground
 population  = 50
 initActions = 100
