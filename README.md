@@ -5,25 +5,25 @@ It's a bit rough, as I came up with the idea in my freshman year of college, but
 The backend framework for this algorithm was provided by the CS1 spacegame assignment - thanks Dr. Hibbs!
 
 This program can be run manually with the standard gradle command:
-```
+```zsh
 ./gradlew run -Pmain=cs2.AIP.<main file> --args="<population> <initActions> <addRate> <addNum>"
 ```
 
 There is also a shell script for ease of use, which takes main function and parameters as argument:
-```
+```zsh
 ./run <main> <population> <initActions> <addRate> <addNum> <numParents> <algToggle>
 ```
 
-Main is the name of the file to run.  
-Population is the starting number of agents.  
-initActions is the starting number of actions.  
-addRate is the number of iterations before new actions are added.  
-addNum is the number of actions to add.  
-numParents is the number of parents selected for the genetic algorithm.
-algToggle switches between the Genetic Algorithm and Monkeys Typing. True selects GA; false is MT.
+- Main: name of the file to run.  
+- Population: starting number of agents.  
+- initActions: starting number of actions.  
+- addRate: number of iterations before new actions are added.  
+- addNum: number of actions to add.  
+- numParents: number of parents selected for the genetic algorithm.
+- algToggle: switches between the Genetic Algorithm and Monkeys Typing. True selects GA; false is MT.
 
 Default values:
-```
+```zsh
 Main file   = Playground
 population  = 50
 initActions = 100

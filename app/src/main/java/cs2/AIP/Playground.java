@@ -101,7 +101,6 @@ public class Playground extends Application {
                 obstacle.display(g);
 
                 frame++;
-                System.out.println(frame);
                 var lenActs = e.kids.get(0).actions.size()-1;
                 if(frame >= lenActs){
                     //can switch implementations of evolve to switch algorithms
